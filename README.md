@@ -24,6 +24,22 @@ php demo.php
 
 Atau klik dua kali **`run-demo.bat`** di Windows.
 
+### Akun Contoh (Default)
+
+| Peran | Email | Password |
+| --- | --- | --- |
+| Nasabah | `budi@mail.com` | `rahasia1` |
+| Petugas | `sari@mail.com` | `petugas1` |
+| Admin | `dewi@mail.com` | `admin123` |
+
+### Konfigurasi Database (Neon PostgreSQL)
+
+Versi CLI saat ini berjalan langsung di memori (tanpa perlu setup database terlebih dahulu). Jika ingin menghubungkan ke **Neon PostgreSQL**:
+
+1. Salin `.env.example` menjadi `.env` lalu isi `DATABASE_URL` dari Neon Console (jangan commit `.env` ke Git).
+2. Jalankan `schema.sql` di Neon SQL Editor untuk membuat 6 tabel beserta data awal.
+3. Pastikan ekstensi PHP `pdo_pgsql` aktif di `php.ini`.
+
 ## Daftar kelas dan file
 
 | Kelas di diagram | Jenis | File (di dalam `src/BankSampah/`) |
