@@ -1,0 +1,42 @@
+/* ===== Tema PHP: Phtalo Green & Krem =====
+   Berkas ini hanya ada di versi PHP dan disuntikkan otomatis oleh tools/salin-frontend.php.
+   Versi Java tetap memakai palet coklat aslinya. Variabel di bawah menimpa palet induk,
+   sehingga tidak ada satu pun aturan tata letak yang perlu diubah. */
+
+:root {
+  /* Tangga warna phtalo green (menggantikan --brown-*) */
+  --brown-950: #08170F;
+  --brown-900: #123524;
+  --brown-800: #17432F;
+  --brown-700: #1D5239;
+  --brown-600: #246345;
+  --brown-500: #3B7A5C;
+  --brown-400: #5E9580;
+  --brown-300: #8CB3A3;
+  --brown-200: #BBD0C6;
+  --brown-100: #DFE9E3;
+  --brown-50: #F2F7F4;
+
+  /* Aksen kuningan hangat (menggantikan --caramel-*) */
+  --caramel-600: #9A7B4F;
+  --caramel-500: #B08F63;
+  --caramel-100: #F0E6D2;
+
+  /* Krem tetap dipertahankan, hanya digeser sedikit ke arah hijau agar serasi */
+  --surface-ivory: #FAF7F2;
+  --surface-cream: #F1EFE4;
+  --border-warm: #DCE4DE;
+  --border-strong: #C3CFC7;
+
+  /* Teks ikut disesuaikan dari coklat gelap ke hijau gelap.
+     --text-muted digelapkan dari rencana awal agar tetap lolos kontras WCAG AA (>= 4.5:1)
+     di atas permukaan putih maupun krem. */
+  --text-primary: #14251D;
+  --text-secondary: #40564B;
+  --text-muted: #566A60;
+
+  /* Bayangan memakai rona hijau, bukan coklat */
+  --shadow-sm: 0 2px 6px rgba(18, 53, 36, 0.06);
+  --shadow-md: 0 8px 24px rgba(18, 53, 36, 0.09);
+  --shadow-lg: 0 16px 40px rgba(18, 53, 36, 0.14);
+}

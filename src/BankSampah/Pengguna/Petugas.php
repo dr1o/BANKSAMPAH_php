@@ -66,6 +66,31 @@ class Petugas extends Pengguna
         return $berhasil;
     }
 
+    public function getIdPetugas(): string
+    {
+        return $this->idPetugas;
+    }
+
+    public function getWilayahTugas(): string
+    {
+        return $this->wilayahTugas;
+    }
+
+    /**
+     * Setoran yang pernah diverifikasi petugas ini (hanya baca).
+     * @return Setoran[]
+     */
+    public function getDaftarSetoran(): array
+    {
+        return $this->daftarSetoran;
+    }
+
+    /** Menambahkan setoran terverifikasi saat dimuat dari penyimpanan, tanpa mencetak log baru. */
+    public function muatSetoranTerverifikasi(Setoran $setoran): void
+    {
+        $this->daftarSetoran[] = $setoran;
+    }
+
     public function tampilkanMenu(): void
     {
         echo "=== Menu Petugas: " . $this->getNama() . " (" . $this->wilayahTugas . ") ===\n";

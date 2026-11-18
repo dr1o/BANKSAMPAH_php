@@ -69,6 +69,11 @@ class Dompet implements Stringable
         return $this->saldoRupiah;
     }
 
+    public function getIdDompet(): string
+    {
+        return $this->idDompet;
+    }
+
     public function getTotalPoin(): int
     {
         return $this->totalPoin;

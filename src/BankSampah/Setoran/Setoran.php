@@ -38,14 +38,37 @@ class Setoran implements Stringable
     // ---- Relasi (diagram): Setoran ..> Dompet (dompet milik nasabah penyetor) ----
     private readonly Dompet $dompet;
 
-    public function __construct(string $idSetoran, Dompet $dompet)
+    public function __construct(string $idSetoran, Dompet $dompet, ?DateTimeImmutable $tanggalSetor = null)
     {
         $this->idSetoran = $idSetoran;
         $this->dompet = $dompet;
-        $this->tanggalSetor = new DateTimeImmutable();
+        $this->tanggalSetor = $tanggalSetor ?? new DateTimeImmutable();
         $this->status = self::DIAJUKAN;
         $this->totalNilai = 0.0;
         $this->totalPoin = 0;
+    }
+
+    /**
+     * Membangun ulang Setoran yang sudah tersimpan (rehydration), bukan transaksi baru.
+     * Dipakai lapisan penyimpanan agar status, total, dan detail terkunci kembali seperti semula.
+     *
+     * @param DetailSetoran[] $daftarDetail
+     */
+    public static function dariPenyimpanan(
+        string $idSetoran,
+        Dompet $dompet,
+        DateTimeImmutable $tanggalSetor,
+        string $status,
+        float $totalNilai,
+        int $totalPoin,
+        array $daftarDetail
+    ): self {
+        $setoran = new self($idSetoran, $dompet, $tanggalSetor);
+        $setoran->status = $status;
+        $setoran->totalNilai = $totalNilai;
+        $setoran->totalPoin = $totalPoin;
+        $setoran->daftarDetail = $daftarDetail;
+        return $setoran;
     }
 
     // ---- Method (sesuai diagram) ----
@@ -115,6 +138,40 @@ class Setoran implements Stringable
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function getIdSetoran(): string
+    {
+        return $this->idSetoran;
+    }
+
+    public function getTanggalSetor(): DateTimeImmutable
+    {
+        return $this->tanggalSetor;
+    }
+
+    public function getTotalNilai(): float
+    {
+        return $this->totalNilai;
+    }
+
+    public function getTotalPoin(): int
+    {
+        return $this->totalPoin;
+    }
+
+    /**
+     * Komposisi: DetailSetoran hanya hidup selama Setoran ini hidup (hanya baca).
+     * @return DetailSetoran[]
+     */
+    public function getDaftarDetail(): array
+    {
+        return $this->daftarDetail;
+    }
+
+    public function getDompet(): Dompet
+    {
+        return $this->dompet;
     }
 
     public function __toString(): string

@@ -37,6 +37,16 @@ class Logam extends Sampah
         return $this->hargaPerKg * $berat * $this->kadarKemurnian;
     }
 
+    public function getJenisLogam(): string
+    {
+        return $this->jenisLogam;
+    }
+
+    public function getKadarKemurnian(): float
+    {
+        return $this->kadarKemurnian;
+    }
+
     public function __toString(): string
     {
         return parent::__toString() . " [" . $this->jenisLogam . ", kemurnian " . (int) round($this->kadarKemurnian * 100) . "%]";

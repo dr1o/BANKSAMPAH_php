@@ -30,6 +30,11 @@ abstract class Sampah implements Stringable
 
     // ---- Method (sesuai diagram) ----
 
+    public function getIdSampah(): string
+    {
+        return $this->idSampah;
+    }
+
     public function getNamaSampah(): string
     {
         return $this->namaSampah;

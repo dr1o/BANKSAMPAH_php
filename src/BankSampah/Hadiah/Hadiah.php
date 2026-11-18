@@ -47,9 +47,33 @@ class Hadiah implements Stringable
         $this->stok--;
     }
 
+    /** Menambah stok hadiah (dipakai Admin saat restock). */
+    public function tambahStok(int $tambahan): void
+    {
+        if ($tambahan <= 0) {
+            throw new InvalidArgumentException("Tambahan stok harus lebih dari 0.");
+        }
+        $this->stok += $tambahan;
+    }
+
     public function getPoinDibutuhkan(): int
     {
         return $this->poinDibutuhkan;
+    }
+
+    public function getIdHadiah(): string
+    {
+        return $this->idHadiah;
+    }
+
+    public function getNamaHadiah(): string
+    {
+        return $this->namaHadiah;
+    }
+
+    public function getStok(): int
+    {
+        return $this->stok;
     }
 
     public function __toString(): string

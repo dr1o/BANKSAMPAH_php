@@ -35,6 +35,16 @@ class Kertas extends Sampah
         return $this->kering ? $nilai : $nilai * 0.7; // kertas basah dipotong 30%
     }
 
+    public function getJenisKertas(): string
+    {
+        return $this->jenisKertas;
+    }
+
+    public function isKering(): bool
+    {
+        return $this->kering;
+    }
+
     public function __toString(): string
     {
         return parent::__toString() . " [" . $this->jenisKertas . ", " . ($this->kering ? "kering" : "basah") . "]";

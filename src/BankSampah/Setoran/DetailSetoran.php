@@ -22,14 +22,15 @@ class DetailSetoran implements Stringable
     // ---- Relasi (diagram): DetailSetoran 0..* --> 1 Sampah ----
     private readonly Sampah $sampah;
 
-    public function __construct(Sampah $sampah, float $berat)
+    public function __construct(Sampah $sampah, float $berat, ?float $subtotalTerkunci = null)
     {
         if ($berat <= 0) {
             throw new InvalidArgumentException("Berat harus lebih dari 0 kg.");
         }
         $this->sampah = $sampah;
         $this->berat = $berat;
-        $this->subtotal = $sampah->hitungNilai($berat); // harga dikunci pada saat setoran diajukan
+        // harga dikunci pada saat setoran diajukan; nilai tersimpan dipakai saat memuat ulang data
+        $this->subtotal = $subtotalTerkunci ?? $sampah->hitungNilai($berat);
     }
 
     // ---- Method (sesuai diagram) ----
@@ -43,6 +44,16 @@ class DetailSetoran implements Stringable
     public function getSubtotal(): float
     {
         return $this->subtotal;
+    }
+
+    public function getSampah(): Sampah
+    {
+        return $this->sampah;
+    }
+
+    public function getBerat(): float
+    {
+        return $this->berat;
     }
 
     public function __toString(): string

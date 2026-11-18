@@ -43,9 +43,33 @@ abstract class Pengguna implements Stringable
         return $this->email === $email && $this->password === $password;
     }
 
+    /**
+     * Password akun apa adanya. Hanya dipakai lapisan penyimpanan (storage/state.json)
+     * agar akun bisa dimuat ulang, tidak pernah dikirim ke frontend.
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
     public function logout(): void
     {
         echo $this->nama . " telah logout.\n";
+    }
+
+    public function getIdPengguna(): string
+    {
+        return $this->idPengguna;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getNoHp(): string
+    {
+        return $this->noHp;
     }
 
     public function getNama(): string

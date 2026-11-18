@@ -35,6 +35,16 @@ class Plastik extends Sampah
         return $this->bersih ? $nilai : $nilai * 0.8; // plastik kotor dipotong 20%
     }
 
+    public function getJenisPlastik(): string
+    {
+        return $this->jenisPlastik;
+    }
+
+    public function isBersih(): bool
+    {
+        return $this->bersih;
+    }
+
     public function __toString(): string
     {
         return parent::__toString() . " [" . $this->jenisPlastik . ", " . ($this->bersih ? "bersih" : "kotor") . "]";

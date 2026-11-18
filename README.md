@@ -2,13 +2,45 @@
 
 Implementasi 1-ke-1 Class Diagram Sistem Bank Sampah (15 kelas, versi dengan `Admin` terpisah) menggunakan **PHP 8+ Object-Oriented Programming (PBO)**.
 Satu file PHP per kelas di diagram, dikelompokkan ke dalam folder (namespace) sesuai kegunaannya.
-Satu-satunya kelas di luar diagram adalah `BankSampah\Main`, yaitu aplikasi CLI untuk menjalankan sistem.
+
+Ada dua lapisan di luar diagram, keduanya tidak mengubah aturan bisnis 15 kelas tersebut:
+
+- `BankSampah\Main` dan `demo.php` untuk aplikasi CLI.
+- `BankSampah\Service\BankSampahService` dan `router.php` untuk versi web (REST API + penyajian frontend).
 
 ## Cara menjalankan
 
 Dibutuhkan PHP 8.1 atau lebih baru (diuji dengan PHP 8.4).
 
-Menjalankan aplikasi CLI interaktif:
+### Versi Web (disarankan untuk demo)
+
+```bash
+php -S 127.0.0.1:8081 -t public router.php
+```
+
+Atau klik dua kali **`run-web.bat`** di Windows, atau dari PowerShell jalankan
+**`.\run-web.bat`** (PowerShell tidak menjalankan berkas di folder aktif tanpa awalan `.\`).
+Browser akan terbuka otomatis di `http://127.0.0.1:8081`.
+
+Tampilan versi web ini mengikuti versi Java karena memakai berkas frontend yang sama
+(`public/` adalah salinan `frontend/` dari repo `BankSampah_KEL03_PBO`). Bedanya hanya
+palet warna: versi PHP memakai **phtalo green dan krem**, sedangkan versi Java memakai
+coklat dan krem, supaya kedua versi mudah dibedakan saat didemokan berdampingan.
+Palet itu ada di `public/src/theme-php.css` dan disuntikkan otomatis oleh skrip salin.
+
+Bila frontend versi Java diperbarui, salin ulang dengan:
+
+```bash
+php tools/salin-frontend.php
+```
+
+Skrip tersebut menyalin berkas Java apa adanya lalu menulis ulang tema hijau dan
+link-nya di `index.html`, jadi hasilnya selalu konsisten dan aman dijalankan berulang.
+
+Data versi web disimpan pada `storage/state.json`, jadi tidak hilang saat server
+di-restart. Hapus berkas itu bila ingin kembali ke data awal.
+
+### Versi CLI interaktif
 
 ```bash
 php src/BankSampah/Main.php
@@ -54,6 +86,26 @@ Versi CLI saat ini berjalan langsung di memori (tanpa perlu setup database terle
 | MetodePenarikan | interface | `Keuangan/MetodePenarikan.php` |
 | TransferBank, EWallet | implements MetodePenarikan | `Keuangan/TransferBank.php`, `Keuangan/EWallet.php` |
 | Hadiah | class | `Hadiah/Hadiah.php` |
+
+## Struktur versi web
+
+| Berkas | Peran |
+| --- | --- |
+| `router.php` | Router server bawaan PHP: menyajikan `public/` dan melayani `/api/*` |
+| `src/BankSampah/Service/BankSampahService.php` | Koordinator transaksi, menyusun state JSON, menyimpan `storage/state.json` |
+| `public/` | Salinan `frontend/` versi Java (HTML, CSS, JS), tidak diubah isinya |
+| `public/src/theme-php.css` | Palet phtalo green khusus versi PHP (ditulis otomatis) |
+| `storage/state.json` | Penyimpanan state (dibuat otomatis, diabaikan Git) |
+| `tools/salin-frontend.php` | Menyalin ulang frontend dari repo Java |
+
+Endpoint mengikuti versi Java: `/api/state`, `/api/login`, `/api/logout`, `/api/register`,
+`/api/pengguna/tambah|password|nama`, `/api/setoran/ajukan|timbang|verifikasi|batalkan`,
+`/api/dompet/tarik`, `/api/hadiah/tukar|tambah|stok`, `/api/sampah/tambah|harga`,
+dan `/api/reload`. Semua respons sukses berbentuk `{ ok, message, user, state }`,
+respons gagal berbentuk `{ ok: false, error }`.
+
+Catatan keamanan: sama seperti versi CLI dan versi Java, password disimpan apa adanya
+(tanpa hash) karena fokus tugas adalah pemodelan OOP, bukan keamanan produksi.
 
 ## Aturan bisnis yang dipilih
 

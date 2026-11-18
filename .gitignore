@@ -2,3 +2,6 @@
 *.log
 .DS_Store
 Thumbs.db
+
+# State runtime versi web (dibuat otomatis, jangan di-commit)
+storage/state.json

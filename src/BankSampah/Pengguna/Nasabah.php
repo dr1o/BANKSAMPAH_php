@@ -30,11 +30,12 @@ class Nasabah extends Pengguna
         string $email,
         string $password,
         string $noHp,
-        string $alamat
+        string $alamat,
+        ?DateTimeImmutable $tanggalDaftar = null
     ) {
         parent::__construct($idPengguna, $nama, $email, $password, $noHp);
         $this->alamat = $alamat;
-        $this->tanggalDaftar = new DateTimeImmutable();
+        $this->tanggalDaftar = $tanggalDaftar ?? new DateTimeImmutable();
         $this->dompet = new Dompet("DMP-" . $idPengguna);
     }
 
@@ -110,9 +111,25 @@ class Nasabah extends Pengguna
         return $this->riwayatSetoran;
     }
 
+    /** Menambahkan riwayat setoran saat dimuat dari penyimpanan, tanpa mencetak log transaksi baru. */
+    public function muatRiwayatSetoran(Setoran $setoran): void
+    {
+        $this->riwayatSetoran[] = $setoran;
+    }
+
     public function getDompet(): Dompet
     {
         return $this->dompet;
+    }
+
+    public function getAlamat(): string
+    {
+        return $this->alamat;
+    }
+
+    public function getTanggalDaftar(): DateTimeImmutable
+    {
+        return $this->tanggalDaftar;
     }
 
     public function tampilkanMenu(): void

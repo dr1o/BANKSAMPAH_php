@@ -220,6 +220,11 @@ class Admin extends Pengguna
         }
     }
 
+    public function getLevelAkses(): string
+    {
+        return $this->levelAkses;
+    }
+
     public function tampilkanMenu(): void
     {
         echo "=== Menu Admin: " . $this->getNama() . " (akses " . $this->levelAkses . ") ===\n";
