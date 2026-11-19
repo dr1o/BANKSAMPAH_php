@@ -22,28 +22,19 @@ function renderTopNavbar() {
     <header class="top-navbar">
       <div class="brand-group">
         <div class="brand-logo">BS</div>
-        <div>
-          <div class="brand-title">Bank Sampah Digital &bull; Kelompok 03</div>
-        </div>
+        <div class="brand-title">Bank Sampah &middot; Kelompok 03</div>
       </div>
 
       <div class="nav-actions">
-        <div class="quick-switcher" title="Pindah cepat antar 3 akses pengguna untuk demonstrasi">
-          <span class="quick-switcher-label">Akses Cepat:</span>
-          <button class="quick-role-btn ${u?.role === 'NASABAH' ? 'active' : ''}" data-quick-role="NASABAH">
-            1. Nasabah (Budi)
-          </button>
-          <button class="quick-role-btn ${u?.role === 'PETUGAS' ? 'active' : ''}" data-quick-role="PETUGAS">
-            2. Petugas (Sari)
-          </button>
-          <button class="quick-role-btn ${u?.role === 'ADMIN' ? 'active' : ''}" data-quick-role="ADMIN">
-            3. Admin (Dewi)
-          </button>
-        </div>
-
         ${
           u
             ? `
+          <div class="quick-switcher" title="Pindah cepat antar peran untuk demonstrasi">
+            <button class="quick-role-btn ${u.role === 'NASABAH' ? 'active' : ''}" data-quick-role="NASABAH">Nasabah</button>
+            <button class="quick-role-btn ${u.role === 'PETUGAS' ? 'active' : ''}" data-quick-role="PETUGAS">Petugas</button>
+            <button class="quick-role-btn ${u.role === 'ADMIN' ? 'active' : ''}" data-quick-role="ADMIN">Admin</button>
+          </div>
+
           <div class="user-chip">
             <span class="user-chip-name">${escapeHtml(u.nama)}</span>
             <span class="role-badge">${escapeHtml(u.role)}</span>
@@ -63,9 +54,9 @@ function render() {
 
   if (!state.appData) {
     app.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:center;min-height:80vh;flex-direction:column;gap:1rem;">
-        <div class="brand-logo" style="width:56px;height:56px;font-size:1.5rem;">BS</div>
-        <h2 style="font-family:var(--font-display);color:var(--brown-900);">Menghubungkan ke Sistem Bank Sampah...</h2>
+      <div class="loading-screen">
+        <div class="brand-logo">BS</div>
+        <p>Memuat data&hellip;</p>
       </div>
     `;
     return;
@@ -145,7 +136,7 @@ function bindSharedEvents() {
       const s = (state.appData.daftarSetoran || []).find((x) => x.idSetoran === idSetoran);
       if (!s) return;
       const html = `
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;background:var(--surface-cream);padding:1rem;border-radius:10px;margin-bottom:1rem;font-size:0.85rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;background:var(--surface-cream);padding:1rem;border-radius:3px;margin-bottom:1rem;font-size:0.85rem;">
           <div><strong>ID Setoran:</strong> <span class="mono">${escapeHtml(s.idSetoran)}</span></div>
           <div><strong>Status:</strong> <span class="badge badge-${escapeHtml(s.status)}">${escapeHtml(s.status)}</span></div>
           <div><strong>Nasabah:</strong> ${escapeHtml(s.namaNasabah)} (${escapeHtml(s.idNasabah)})</div>

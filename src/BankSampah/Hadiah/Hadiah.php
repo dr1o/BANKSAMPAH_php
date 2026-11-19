@@ -47,6 +47,13 @@ class Hadiah implements Stringable
         $this->stok--;
     }
 
+    public function getPoinDibutuhkan(): int
+    {
+        return $this->poinDibutuhkan;
+    }
+
+    // ---- Penunjang di luar diagram ----
+
     /** Menambah stok hadiah (dipakai Admin saat restock). */
     public function tambahStok(int $tambahan): void
     {
@@ -54,11 +61,6 @@ class Hadiah implements Stringable
             throw new InvalidArgumentException("Tambahan stok harus lebih dari 0.");
         }
         $this->stok += $tambahan;
-    }
-
-    public function getPoinDibutuhkan(): int
-    {
-        return $this->poinDibutuhkan;
     }
 
     public function getIdHadiah(): string

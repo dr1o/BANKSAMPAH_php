@@ -126,7 +126,7 @@ function renderNasabahSetorTab() {
                 <div class="badge badge-caramel" style="margin-bottom:0.65rem;display:inline-block;">
                   ${escapeHtml(s.keteranganKondisi)}
                 </div>
-                <div style="background:var(--surface-cream);padding:0.55rem 0.75rem;border-radius:8px;font-size:0.8rem;">
+                <div style="background:var(--surface-cream);padding:0.55rem 0.75rem;border-radius:3px;font-size:0.8rem;">
                   <div>Harga Dasar: <strong class="mono">${formatRp(s.hargaPerKg)}/kg</strong></div>
                   <div>Nilai Efektif: <strong class="mono" style="color:var(--brown-900);">${formatRp(s.hargaEfektifPerKg)}/kg</strong></div>
                 </div>
@@ -171,7 +171,7 @@ function renderNasabahSetorTab() {
         ${
           state.cart.length === 0
             ? `
-          <div style="padding:2.2rem 1rem;text-align:center;background:var(--surface-ivory);border-radius:10px;border:1px dashed var(--border-strong);color:var(--text-muted);">
+          <div style="padding:2.2rem 1rem;text-align:center;background:var(--surface-ivory);border-radius:3px;border:1px dashed var(--border-strong);color:var(--text-muted);">
             Keranjang masih kosong.<br/>Pilih jenis sampah di sebelah kiri dan masukkan berat (kg).
           </div>
         `
@@ -208,7 +208,7 @@ function renderNasabahSetorTab() {
             </table>
           </div>
 
-          <div style="background:var(--surface-cream);padding:1rem;border-radius:10px;margin-bottom:1rem;">
+          <div style="background:var(--surface-cream);padding:1rem;border-radius:3px;margin-bottom:1rem;">
             <div style="display:flex;justify-content:space-between;margin-bottom:0.35rem;">
               <span style="font-size:0.85rem;color:var(--text-secondary);">Estimasi Total Nilai:</span>
               <strong class="mono" style="font-size:1.1rem;color:var(--brown-900);">${formatRp(totalCart)}</strong>
@@ -406,7 +406,7 @@ function renderNasabahTarikTab() {
 
       <div class="card">
         <h3 class="card-title" style="margin-bottom:0.85rem;">Simulasi Potongan</h3>
-        <div style="background:var(--surface-cream);padding:1.2rem;border-radius:12px;display:flex;flex-direction:column;gap:0.7rem;">
+        <div style="background:var(--surface-cream);padding:1.2rem;border-radius:3px;display:flex;flex-direction:column;gap:0.7rem;">
           <div style="display:flex;justify-content:space-between;">
             <span>Saldo Tersedia:</span>
             <strong class="mono">${formatRp(dompet.saldoRupiah)}</strong>

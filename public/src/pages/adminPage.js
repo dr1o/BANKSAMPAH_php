@@ -20,7 +20,7 @@ export function renderAdminPage() {
       <aside class="admin-sidebar">
         <div>
           <div class="admin-profile-box">
-            <span class="badge badge-caramel" style="margin-bottom:0.4rem;">KONSOL ADMIN &bull; ${escapeHtml(u.idPengguna)}</span>
+            <span class="badge badge-caramel" style="margin-bottom:0.4rem;">Admin &middot; ${escapeHtml(u.idPengguna)}</span>
             <h3 style="font-family:var(--font-display);font-size:1.2rem;color:var(--surface-white);">${escapeHtml(u.nama)}</h3>
             <div style="font-size:0.78rem;color:var(--brown-200);margin-top:0.2rem;">${escapeHtml(u.email)}</div>
             <div style="margin-top:0.55rem;font-size:0.75rem;color:var(--caramel-100);">
@@ -51,7 +51,6 @@ export function renderAdminPage() {
             </button>
             <button class="admin-nav-btn ${state.adminTab === 'profil' ? 'active' : ''}" data-admin-tab="profil">
               <span>6. Ubah Password Admin</span>
-              <span>⚙</span>
             </button>
           </div>
         </div>
@@ -94,11 +93,11 @@ function renderAdminLaporanTab() {
   return `
     <div>
       <div style="margin-bottom:1.25rem;">
-        <h2 style="font-family:var(--font-display);font-size:1.6rem;color:var(--brown-900);">
-          Laporan Eksekutif Bank Sampah
+        <h2 style="font-size:1.4rem;color:var(--brown-900);">
+          Laporan Bank Sampah
         </h2>
-        <p style="color:var(--text-secondary);font-size:0.88rem;">
-          Rekapitulasi real-time seluruh pengguna, katalog sampah, hadiah, dan transaksi setoran.
+        <p style="color:var(--text-secondary);font-size:0.85rem;">
+          Ringkasan pengguna, sampah, hadiah, dan setoran.
         </p>
       </div>
 
@@ -128,8 +127,8 @@ function renderAdminLaporanTab() {
       <div class="card" style="margin-bottom:1.5rem;">
         <div class="card-header">
           <div>
-            <h3 class="card-title">Distribusi Status Transaksi Setoran</h3>
-            <p class="card-subtitle">Klik status untuk memfilter tabel transaksi di bawah</p>
+            <h3 class="card-title">Status setoran</h3>
+            <p class="card-subtitle">Klik status untuk memfilter tabel.</p>
           </div>
           <div style="display:flex;gap:0.45rem;flex-wrap:wrap;">
             <button class="btn ${state.adminStatusFilter === 'ALL' ? 'btn-primary' : 'btn-secondary'} btn-sm" data-filter-status="ALL">
@@ -560,21 +559,21 @@ function renderAdminPenggunaTab() {
 
 function renderAdminErdTab() {
   const classes = [
-    { name: 'Pengguna', type: 'abstract class', attrs: ['- idPengguna: String', '- nama: String', '- email: String', '- password: String', '- noHp: String'], methods: ['+ login(email, password): boolean', '+ logout(): void', '+ ubahPassword(lama, baru): boolean', '+ tampilkanMenu(): void {abstract}'] },
-    { name: 'Nasabah', type: 'extends Pengguna', attrs: ['- alamat: String', '- tanggalDaftar: Date', '- dompet: Dompet (1 *-- 1)', '- riwayatSetoran: List<Setoran>'], methods: ['+ setorSampah(Setoran): void', '+ lihatRiwayat(): List<Setoran>', '+ tukarPoin(Hadiah): boolean', '+ tarikSaldo(double, MetodePenarikan): boolean'] },
-    { name: 'Petugas', type: 'extends Pengguna', attrs: ['- idPetugas: String', '- wilayahTugas: String', '- daftarSetoran: List<Setoran>'], methods: ['+ timbangSampah(Setoran): void', '+ verifikasiSetoran(Setoran): boolean'] },
-    { name: 'Admin', type: 'extends Pengguna', attrs: ['- levelAkses: String', '- daftarSampah: List<Sampah>', '- daftarHadiah: List<Hadiah>', '- daftarPengguna: List<Pengguna>', '- daftarSetoran: List<Setoran>'], methods: ['+ kelolaJenisSampah(): void', '+ kelolaHadiah(): void', '+ kelolaPengguna(): void', '+ buatLaporan(): void'] },
-    { name: 'Sampah', type: 'abstract class', attrs: ['- idSampah: String', '- namaSampah: String', '# hargaPerKg: double'], methods: ['+ hitungNilai(berat): double {abstract}', '+ hitungPoin(nilai): int', '+ setHargaPerKg(harga): void'] },
+    { name: 'Pengguna', type: 'abstract class', attrs: ['- idPengguna: String', '- nama: String', '- email: String', '- password: String', '- noHp: String'], methods: ['+ login(email, password): boolean', '+ logout(): void', '+ getNama(): String', '+ setNama(nama): void', '+ ubahPassword(lama, baru): boolean', '+ tampilkanMenu(): void {abstract}'] },
+    { name: 'Nasabah', type: 'extends Pengguna', attrs: ['- alamat: String', '- tanggalDaftar: Date', '- dompet: Dompet (1 *-- 1)', '- riwayatSetoran: List<Setoran>'], methods: ['+ setorSampah(setoran): void', '+ tukarPoin(hadiah): boolean', '+ tarikSaldo(jumlah, metode): boolean', '+ lihatRiwayat(): List', '+ getDompet(): Dompet', '+ tampilkanMenu(): void'] },
+    { name: 'Petugas', type: 'extends Pengguna', attrs: ['- idPetugas: String', '- wilayahTugas: String', '- daftarSetoran: List<Setoran>'], methods: ['+ timbangSampah(setoran): void', '+ verifikasiSetoran(setoran): boolean', '+ tampilkanMenu(): void'] },
+    { name: 'Admin', type: 'extends Pengguna', attrs: ['- levelAkses: String', '- daftarSampah: List<Sampah>', '- daftarHadiah: List<Hadiah>', '- daftarPengguna: List<Pengguna>', '- daftarSetoran: List<Setoran>'], methods: ['+ kelolaJenisSampah(): void', '+ kelolaHadiah(): void', '+ kelolaPengguna(): void', '+ buatLaporan(): void', '+ tampilkanMenu(): void'] },
+    { name: 'Sampah', type: 'abstract class', attrs: ['- idSampah: String', '- namaSampah: String', '# hargaPerKg: double'], methods: ['+ getNamaSampah(): String', '+ getHargaPerKg(): double', '+ setHargaPerKg(harga): void', '+ hitungNilai(berat): double {abstract}', '+ hitungPoin(nilai): int'] },
     { name: 'Plastik', type: 'extends Sampah', attrs: ['- jenisPlastik: String', '- bersih: boolean'], methods: ['+ hitungNilai(berat): double (kotor -20%)'] },
     { name: 'Kertas', type: 'extends Sampah', attrs: ['- jenisKertas: String', '- kering: boolean'], methods: ['+ hitungNilai(berat): double (basah -30%)'] },
     { name: 'Logam', type: 'extends Sampah', attrs: ['- jenisLogam: String', '- kadarKemurnian: double'], methods: ['+ hitungNilai(berat): double (* kemurnian)'] },
-    { name: 'Setoran', type: 'class', attrs: ['- idSetoran: String', '- tanggalSetor: Date', '- status: String', '- totalNilai: double', '- totalPoin: int', '- daftarDetail: List<DetailSetoran>', '- dompet: Dompet'], methods: ['+ tambahDetail(DetailSetoran): void', '+ hitungTotal(): double', '+ verifikasi(Petugas): boolean', '+ batalkan(): void'] },
-    { name: 'DetailSetoran', type: 'class', attrs: ['- berat: double', '- subtotal: double', '- sampah: Sampah'], methods: ['+ hitungSubtotal(): double'] },
-    { name: 'Dompet', type: 'class', attrs: ['- idDompet: String', '- saldoRupiah: double', '- totalPoin: int'], methods: ['+ tambahSaldo(double): void', '+ kurangiSaldo(double): boolean', '+ tambahPoin(int): void', '+ kurangiPoin(int): boolean'] },
+    { name: 'Setoran', type: 'class', attrs: ['- idSetoran: String', '- tanggalSetor: Date', '- status: String', '- totalNilai: double', '- totalPoin: int', '- daftarDetail: List<DetailSetoran>', '- dompet: Dompet'], methods: ['+ tambahDetail(detail): void', '+ hitungTotal(): void', '+ verifikasi(petugas): boolean', '+ batalkan(): void', '+ getStatus(): String'] },
+    { name: 'DetailSetoran', type: 'class', attrs: ['- berat: double', '- subtotal: double', '- sampah: Sampah'], methods: ['+ hitungSubtotal(): double', '+ getSubtotal(): double'] },
+    { name: 'Dompet', type: 'class', attrs: ['- idDompet: String', '- saldoRupiah: double', '- totalPoin: int'], methods: ['+ tambahSaldo(jumlah): void', '+ kurangiSaldo(jumlah): boolean', '+ tambahPoin(poin): void', '+ kurangiPoin(poin): boolean', '+ getSaldoRupiah(): double', '+ getTotalPoin(): int'] },
     { name: 'MetodePenarikan', type: 'interface', attrs: [], methods: ['+ proses(jumlah): boolean', '+ hitungBiayaAdmin(jumlah): double', '+ getNamaMetode(): String'] },
-    { name: 'TransferBank', type: 'implements MetodePenarikan', attrs: ['- namaBank: String', '- noRekening: String', '- namaPemilik: String'], methods: ['+ proses(jumlah): boolean', '+ hitungBiayaAdmin(jumlah): Rp2.500'] },
-    { name: 'EWallet', type: 'implements MetodePenarikan', attrs: ['- penyedia: String', '- noHpTerdaftar: String'], methods: ['+ proses(jumlah): boolean', '+ hitungBiayaAdmin(jumlah): 1%'] },
-    { name: 'Hadiah', type: 'class', attrs: ['- idHadiah: String', '- namaHadiah: String', '- poinDibutuhkan: int', '- stok: int'], methods: ['+ cekStok(): boolean', '+ kurangiStok(): void', '+ tambahStok(int): void'] }
+    { name: 'TransferBank', type: 'implements MetodePenarikan', attrs: ['- namaBank: String', '- noRekening: String', '- namaPemilik: String'], methods: ['+ proses(jumlah): boolean', '+ hitungBiayaAdmin(jumlah): Rp2.500', '+ getNamaMetode(): String'] },
+    { name: 'EWallet', type: 'implements MetodePenarikan', attrs: ['- penyedia: String', '- noHpTerdaftar: String'], methods: ['+ proses(jumlah): boolean', '+ hitungBiayaAdmin(jumlah): 1%', '+ getNamaMetode(): String'] },
+    { name: 'Hadiah', type: 'class', attrs: ['- idHadiah: String', '- namaHadiah: String', '- poinDibutuhkan: int', '- stok: int'], methods: ['+ cekStok(): boolean', '+ kurangiStok(): void', '+ getPoinDibutuhkan(): int'] }
   ];
 
   return `
@@ -582,7 +581,7 @@ function renderAdminErdTab() {
       <div class="card-header">
         <div>
           <h3 class="card-title">Kesesuaian 15 Kelas Diagram &amp; ERD</h3>
-          <p class="card-subtitle">Seluruh atribut, visibilitas, method, dan relasi diimplementasikan di folder <code>src/banksampah/</code></p>
+          <p class="card-subtitle">Atribut, method, dan relasi mengikuti diagram kelas di <code>src/BankSampah/</code>.</p>
         </div>
       </div>
 

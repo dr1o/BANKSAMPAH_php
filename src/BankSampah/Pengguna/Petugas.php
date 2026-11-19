@@ -40,7 +40,7 @@ class Petugas extends Pengguna
             echo "Setoran tidak dapat ditimbang. Status sekarang: " . $setoran->getStatus() . "\n";
             return;
         }
-        $total = $setoran->hitungTotal();
+        $setoran->hitungTotal();
         if ($setoran->getStatus() === 'DIAJUKAN') {
             echo "Setoran tidak berisi sampah, penimbangan dibatalkan.\n";
             return;
@@ -48,7 +48,7 @@ class Petugas extends Pengguna
         printf(
             "%s menimbang setoran. Total nilai Rp%s. Status: %s\n",
             $this->getNama(),
-            number_format($total, 0, ',', '.'),
+            number_format($setoran->getTotalNilai(), 0, ',', '.'),
             $setoran->getStatus()
         );
     }
@@ -65,6 +65,17 @@ class Petugas extends Pengguna
         }
         return $berhasil;
     }
+
+    public function tampilkanMenu(): void
+    {
+        echo "=== Menu Petugas: " . $this->getNama() . " (" . $this->wilayahTugas . ") ===\n";
+        echo "1. Timbang sampah\n";
+        echo "2. Verifikasi setoran\n";
+        echo "3. Ubah password\n";
+        echo "0. Logout\n";
+    }
+
+    // ---- Penunjang di luar diagram ----
 
     public function getIdPetugas(): string
     {
@@ -89,15 +100,6 @@ class Petugas extends Pengguna
     public function muatSetoranTerverifikasi(Setoran $setoran): void
     {
         $this->daftarSetoran[] = $setoran;
-    }
-
-    public function tampilkanMenu(): void
-    {
-        echo "=== Menu Petugas: " . $this->getNama() . " (" . $this->wilayahTugas . ") ===\n";
-        echo "1. Timbang sampah\n";
-        echo "2. Verifikasi setoran\n";
-        echo "3. Ubah password\n";
-        echo "0. Logout\n";
     }
 
     public function __toString(): string

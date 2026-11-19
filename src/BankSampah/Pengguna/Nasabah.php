@@ -111,25 +111,9 @@ class Nasabah extends Pengguna
         return $this->riwayatSetoran;
     }
 
-    /** Menambahkan riwayat setoran saat dimuat dari penyimpanan, tanpa mencetak log transaksi baru. */
-    public function muatRiwayatSetoran(Setoran $setoran): void
-    {
-        $this->riwayatSetoran[] = $setoran;
-    }
-
     public function getDompet(): Dompet
     {
         return $this->dompet;
-    }
-
-    public function getAlamat(): string
-    {
-        return $this->alamat;
-    }
-
-    public function getTanggalDaftar(): DateTimeImmutable
-    {
-        return $this->tanggalDaftar;
     }
 
     public function tampilkanMenu(): void
@@ -142,6 +126,24 @@ class Nasabah extends Pengguna
         echo "5. Tarik saldo\n";
         echo "6. Ubah password\n";
         echo "0. Logout\n";
+    }
+
+    // ---- Penunjang di luar diagram ----
+
+    /** Menambahkan riwayat setoran saat dimuat dari penyimpanan, tanpa mencetak log transaksi baru. */
+    public function muatRiwayatSetoran(Setoran $setoran): void
+    {
+        $this->riwayatSetoran[] = $setoran;
+    }
+
+    public function getAlamat(): string
+    {
+        return $this->alamat;
+    }
+
+    public function getTanggalDaftar(): DateTimeImmutable
+    {
+        return $this->tanggalDaftar;
     }
 
     public function __toString(): string

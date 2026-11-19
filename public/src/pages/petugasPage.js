@@ -25,12 +25,13 @@ export function renderPetugasPage() {
         <div class="station-badge-group">
           <div class="station-icon">PTG</div>
           <div>
-            <div style="display:flex;align-items:center;gap:0.5rem;">
-              <span class="badge badge-brown">STASIUN KERJA PETUGAS</span>
-              <span class="mono" style="font-size:0.8rem;font-weight:700;color:var(--brown-800);">
-                ID Petugas: ${escapeHtml(u.idPetugas || '-')}
+            <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
+              <span class="mono" style="font-size:0.78rem;color:var(--text-muted);">
+                ID ${escapeHtml(u.idPetugas || '-')}
               </span>
-              <span class="badge badge-caramel">Wilayah Tugas: ${escapeHtml(u.wilayahTugas || '-')}</span>
+              <span style="font-size:0.78rem;color:var(--text-muted);">
+                ${escapeHtml(u.wilayahTugas || '-')}
+              </span>
             </div>
             <h2 style="font-family:var(--font-display);font-size:1.5rem;color:var(--brown-900);margin-top:0.25rem;">
               Petugas ${escapeHtml(u.nama)} (${escapeHtml(u.idPengguna)})
@@ -39,11 +40,11 @@ export function renderPetugasPage() {
         </div>
 
         <div style="text-align:right;">
-          <div style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;font-weight:700;">
-            Total Verifikasi Saya
+          <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">
+            Total verifikasi
           </div>
-          <div class="mono" style="font-size:1.55rem;font-weight:700;color:var(--brown-900);">
-            ${listVerifikasiSaya.length} Setoran Terverifikasi
+          <div class="mono" style="font-size:1.45rem;font-weight:600;color:var(--brown-900);">
+            ${listVerifikasiSaya.length} setoran
           </div>
         </div>
       </section>
@@ -69,7 +70,7 @@ export function renderPetugasPage() {
         </button>
 
         <button class="pipeline-stage-card ${state.petugasTab === 'profil' ? 'active' : ''}" data-petugas-tab="profil">
-          <div class="stage-count">⚙</div>
+          <div class="stage-count">&mdash;</div>
           <div class="stage-title">4. Profil &amp; Password</div>
           <div class="stage-desc">Kelola akun Petugas</div>
         </button>
@@ -99,7 +100,7 @@ function renderPetugasStageContent(listDiajukan, listDitimbang, listVerifikasiSa
 
         ${
           listDiajukan.length === 0
-            ? `<div style="padding:2.5rem;text-align:center;color:var(--text-muted);background:var(--surface-ivory);border-radius:10px;">Tidak ada antrean setoran berstatus DIAJUKAN saat ini.</div>`
+            ? `<div style="padding:2.5rem;text-align:center;color:var(--text-muted);background:var(--surface-ivory);border-radius:3px;">Tidak ada antrean setoran berstatus DIAJUKAN saat ini.</div>`
             : `
           <div class="queue-cards-grid">
             ${listDiajukan
@@ -114,13 +115,13 @@ function renderPetugasStageContent(listDiajukan, listDitimbang, listVerifikasiSa
                   <span class="badge badge-DIAJUKAN">DIAJUKAN</span>
                 </div>
 
-                <div style="background:var(--surface-cream);padding:0.75rem;border-radius:8px;font-size:0.83rem;">
+                <div style="background:var(--surface-cream);padding:0.75rem;border-radius:3px;font-size:0.83rem;">
                   <div><strong>Penyetor:</strong> ${escapeHtml(s.namaNasabah)} (${escapeHtml(s.idNasabah)})</div>
                 </div>
 
                 <div>
-                  <div style="font-size:0.76rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem;">
-                    Item Sampah (${s.daftarDetail.length} Item):
+                  <div style="font-size:0.76rem;font-weight:600;color:var(--text-muted);margin-bottom:0.35rem;">
+                    Item sampah (${s.daftarDetail.length} item)
                   </div>
                   ${s.daftarDetail
                     .map(
@@ -141,7 +142,7 @@ function renderPetugasStageContent(listDiajukan, listDitimbang, listVerifikasiSa
 
                 <div style="display:flex;gap:0.6rem;margin-top:auto;">
                   <button class="btn btn-primary" style="flex:1;" data-petugas-timbang="${escapeHtml(s.idSetoran)}">
-                    ⚖ Timbang &amp; Hitung Total
+                    Timbang &amp; hitung total
                   </button>
                   <button class="btn btn-danger btn-sm" data-cancel-setoran="${escapeHtml(s.idSetoran)}">
                     Tolak
@@ -172,7 +173,7 @@ function renderPetugasStageContent(listDiajukan, listDitimbang, listVerifikasiSa
 
         ${
           listDitimbang.length === 0
-            ? `<div style="padding:2.5rem;text-align:center;color:var(--text-muted);background:var(--surface-ivory);border-radius:10px;">Belum ada setoran berstatus DITIMBANG yang menunggu verifikasi.</div>`
+            ? `<div style="padding:2.5rem;text-align:center;color:var(--text-muted);background:var(--surface-ivory);border-radius:3px;">Belum ada setoran berstatus DITIMBANG yang menunggu verifikasi.</div>`
             : `
           <div class="queue-cards-grid">
             ${listDitimbang
@@ -187,7 +188,7 @@ function renderPetugasStageContent(listDiajukan, listDitimbang, listVerifikasiSa
                   <span class="badge badge-DITIMBANG">DITIMBANG</span>
                 </div>
 
-                <div style="background:var(--surface-cream);padding:0.8rem;border-radius:8px;font-size:0.84rem;">
+                <div style="background:var(--surface-cream);padding:0.8rem;border-radius:3px;font-size:0.84rem;">
                   <div><strong>Nasabah:</strong> ${escapeHtml(s.namaNasabah)} (${escapeHtml(s.idNasabah)})</div>
                   <div style="margin-top:0.4rem;padding-top:0.4rem;border-top:1px dashed var(--border-strong);display:flex;justify-content:space-between;">
                     <span>Pencairan Saldo &amp; Poin:</span>
@@ -210,7 +211,7 @@ function renderPetugasStageContent(listDiajukan, listDitimbang, listVerifikasiSa
 
                 <div style="display:flex;gap:0.6rem;margin-top:auto;">
                   <button class="btn btn-primary" style="flex:1;" data-petugas-verifikasi="${escapeHtml(s.idSetoran)}">
-                    ✓ Verifikasi &amp; Cairkan Saldo
+                    Verifikasi &amp; cairkan saldo
                   </button>
                   <button class="btn btn-danger btn-sm" data-cancel-setoran="${escapeHtml(s.idSetoran)}">
                     Tolak

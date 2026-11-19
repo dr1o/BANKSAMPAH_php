@@ -48,29 +48,6 @@ class Setoran implements Stringable
         $this->totalPoin = 0;
     }
 
-    /**
-     * Membangun ulang Setoran yang sudah tersimpan (rehydration), bukan transaksi baru.
-     * Dipakai lapisan penyimpanan agar status, total, dan detail terkunci kembali seperti semula.
-     *
-     * @param DetailSetoran[] $daftarDetail
-     */
-    public static function dariPenyimpanan(
-        string $idSetoran,
-        Dompet $dompet,
-        DateTimeImmutable $tanggalSetor,
-        string $status,
-        float $totalNilai,
-        int $totalPoin,
-        array $daftarDetail
-    ): self {
-        $setoran = new self($idSetoran, $dompet, $tanggalSetor);
-        $setoran->status = $status;
-        $setoran->totalNilai = $totalNilai;
-        $setoran->totalPoin = $totalPoin;
-        $setoran->daftarDetail = $daftarDetail;
-        return $setoran;
-    }
-
     // ---- Method (sesuai diagram) ----
 
     /** Menambah item sampah. Hanya boleh saat status masih DIAJUKAN (sebelum ditimbang). */
@@ -87,8 +64,9 @@ class Setoran implements Stringable
     /**
      * Menjumlahkan subtotal seluruh detail menjadi totalNilai dan menghitung totalPoin.
      * Dipanggil petugas saat penimbangan; bila status masih DIAJUKAN dan ada detail, status menjadi DITIMBANG.
+     * Nilai akhir dibaca lewat getTotalNilai().
      */
-    public function hitungTotal(): float
+    public function hitungTotal(): void
     {
         $total = 0.0;
         foreach ($this->daftarDetail as $detail) {
@@ -99,7 +77,6 @@ class Setoran implements Stringable
         if ($this->status === self::DIAJUKAN && count($this->daftarDetail) > 0) {
             $this->status = self::DITIMBANG;
         }
-        return $this->totalNilai;
     }
 
     /**
@@ -172,6 +149,31 @@ class Setoran implements Stringable
     public function getDompet(): Dompet
     {
         return $this->dompet;
+    }
+
+    // ---- Penunjang di luar diagram (dipakai penyimpanan) ----
+
+    /**
+     * Membangun ulang Setoran yang sudah tersimpan (rehydration), bukan transaksi baru.
+     * Dipakai lapisan penyimpanan agar status, total, dan detail terkunci kembali seperti semula.
+     *
+     * @param DetailSetoran[] $daftarDetail
+     */
+    public static function dariPenyimpanan(
+        string $idSetoran,
+        Dompet $dompet,
+        DateTimeImmutable $tanggalSetor,
+        string $status,
+        float $totalNilai,
+        int $totalPoin,
+        array $daftarDetail
+    ): self {
+        $setoran = new self($idSetoran, $dompet, $tanggalSetor);
+        $setoran->status = $status;
+        $setoran->totalNilai = $totalNilai;
+        $setoran->totalPoin = $totalPoin;
+        $setoran->daftarDetail = $daftarDetail;
+        return $setoran;
     }
 
     public function __toString(): string

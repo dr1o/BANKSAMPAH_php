@@ -22,20 +22,23 @@ Atau klik dua kali **`run-web.bat`** di Windows, atau dari PowerShell jalankan
 **`.\run-web.bat`** (PowerShell tidak menjalankan berkas di folder aktif tanpa awalan `.\`).
 Browser akan terbuka otomatis di `http://127.0.0.1:8081`.
 
-Tampilan versi web ini mengikuti versi Java karena memakai berkas frontend yang sama
-(`public/` adalah salinan `frontend/` dari repo `BankSampah_KEL03_PBO`). Bedanya hanya
-palet warna: versi PHP memakai **phtalo green dan krem**, sedangkan versi Java memakai
-coklat dan krem, supaya kedua versi mudah dibedakan saat didemokan berdampingan.
-Palet itu ada di `public/src/theme-php.css` dan disuntikkan otomatis oleh skrip salin.
+Tampilan versi web ini memakai berkas frontend yang sama dengan versi Java
+(`public/` adalah salinan `frontend/` dari repo `BankSampah_KEL03_PBO`), lalu ditimpa
+tema datar versi PHP: font sistem, permukaan putih, garis tipis, dan aksen hijau tua.
+Versi Java tetap memakai palet coklat dan heading serif, sehingga kedua versi mudah
+dibedakan saat didemokan berdampingan.
 
-Bila frontend versi Java diperbarui, salin ulang dengan:
+Sumber tema ada di `tools/theme-php.css`. Bila frontend versi Java diperbarui, salin
+ulang dengan:
 
 ```bash
 php tools/salin-frontend.php
 ```
 
-Skrip tersebut menyalin berkas Java apa adanya lalu menulis ulang tema hijau dan
-link-nya di `index.html`, jadi hasilnya selalu konsisten dan aman dijalankan berulang.
+Skrip tersebut menyalin berkas Java, menyalin tema PHP, menghapus tautan Google Fonts,
+lalu menyuntikkan link tema ke `index.html`. Catatan: skrip ini juga mengembalikan
+berkas JavaScript frontend ke versi Java, jadi penyesuaian teks khusus PHP di
+`public/src/**/*.js` akan tertimpa.
 
 Data versi web disimpan pada `storage/state.json`, jadi tidak hilang saat server
 di-restart. Hapus berkas itu bila ingin kembali ke data awal.

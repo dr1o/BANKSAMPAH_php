@@ -12,36 +12,30 @@ export function renderLoginPage() {
     <div class="auth-wrapper">
       <section class="auth-showcase">
         <div>
-          <h1 class="auth-hero-title">Sistem Informasi Bank Sampah Berbasis OOP</h1>
+          <p class="auth-kicker">Kelompok 03 &middot; PBO</p>
+          <h1 class="auth-hero-title">Bank Sampah</h1>
+          <p class="auth-hero-desc">
+            Pencatatan setoran sampah, saldo dompet, dan penukaran poin.
+            Pilih akun demo di bawah untuk mencoba tiap peran.
+          </p>
 
           <div class="demo-accounts-box">
-            <h3>Klik untuk Masuk Cepat Sesuai Peran Pengguna (3 Akses Berbeda):</h3>
-            <div class="demo-role-cards">
-              <button class="demo-role-card" data-quick-role="NASABAH">
-                <span class="demo-role-tag">AKSES 1 &bull; NASABAH</span>
-                <div class="demo-role-name">Budi (N-001)</div>
-                <div class="demo-role-cred">budi@mail.com / rahasia1</div>
-                <div style="font-size:0.73rem;color:var(--text-secondary);margin-top:0.35rem;">
-                  Setor sampah, Dompet, Tarik Saldo, Tukar Hadiah
-                </div>
+            <h3>Akun demo</h3>
+            <div class="demo-role-list">
+              <button class="demo-role-row" data-quick-role="NASABAH">
+                <span class="demo-role-role">Nasabah</span>
+                <span class="demo-role-name">Budi</span>
+                <span class="demo-role-cred">budi@mail.com / rahasia1</span>
               </button>
-
-              <button class="demo-role-card" data-quick-role="PETUGAS">
-                <span class="demo-role-tag" style="background:var(--caramel-600);">AKSES 2 &bull; PETUGAS</span>
-                <div class="demo-role-name">Sari (P-001)</div>
-                <div class="demo-role-cred">sari@mail.com / petugas1</div>
-                <div style="font-size:0.73rem;color:var(--text-secondary);margin-top:0.35rem;">
-                  Timbang Setoran &amp; Verifikasi Pencairan Dompet
-                </div>
+              <button class="demo-role-row" data-quick-role="PETUGAS">
+                <span class="demo-role-role">Petugas</span>
+                <span class="demo-role-name">Sari</span>
+                <span class="demo-role-cred">sari@mail.com / petugas1</span>
               </button>
-
-              <button class="demo-role-card" data-quick-role="ADMIN">
-                <span class="demo-role-tag" style="background:var(--brown-950);">AKSES 3 &bull; ADMIN</span>
-                <div class="demo-role-name">Dewi (A-001)</div>
-                <div class="demo-role-cred">dewi@mail.com / admin123</div>
-                <div style="font-size:0.73rem;color:var(--text-secondary);margin-top:0.35rem;">
-                  Kelola Sampah, Hadiah, Pengguna &amp; Laporan
-                </div>
+              <button class="demo-role-row" data-quick-role="ADMIN">
+                <span class="demo-role-role">Admin</span>
+                <span class="demo-role-name">Dewi</span>
+                <span class="demo-role-cred">dewi@mail.com / admin123</span>
               </button>
             </div>
           </div>
@@ -52,10 +46,10 @@ export function renderLoginPage() {
         <div class="auth-card">
           <div class="auth-tabs">
             <button class="auth-tab-btn ${state.authTab === 'login' ? 'active' : ''}" data-auth-tab="login">
-              Masuk Akun (Login)
+              Masuk
             </button>
             <button class="auth-tab-btn ${state.authTab === 'register' ? 'active' : ''}" data-auth-tab="register">
-              Daftar Nasabah Baru
+              Daftar
             </button>
           </div>
 
@@ -64,8 +58,8 @@ export function renderLoginPage() {
               ? `
             <form id="form-login">
               <div style="margin-bottom:1.25rem;">
-                <h2 class="card-title">Selamat Datang</h2>
-                <p class="card-subtitle">Masuk menggunakan email &amp; password akun Anda</p>
+                <h2 class="card-title">Masuk ke akun</h2>
+                <p class="card-subtitle">Gunakan email dan password akun yang terdaftar.</p>
               </div>
               <div class="form-group">
                 <label class="form-label">Alamat Email</label>
@@ -75,15 +69,15 @@ export function renderLoginPage() {
                 <label class="form-label">Password</label>
                 <input type="password" class="form-input" id="login-password" placeholder="Masukkan password" value="rahasia1" required />
               </div>
-              <button type="submit" class="btn btn-primary btn-block" style="margin-top:0.5rem;padding:0.78rem;">
-                Masuk ke Sistem Bank Sampah &rarr;
+              <button type="submit" class="btn btn-primary btn-block" style="margin-top:0.5rem;padding:0.65rem;">
+                Masuk
               </button>
             </form>
           `
               : `
             <form id="form-register">
               <div style="margin-bottom:1.1rem;">
-                <h2 class="card-title">Registrasi Nasabah Baru</h2>
+                <h2 class="card-title">Daftar nasabah</h2>
               </div>
               <div class="form-group">
                 <label class="form-label">Nama Lengkap</label>
@@ -107,8 +101,8 @@ export function renderLoginPage() {
                 <label class="form-label">Alamat Tempat Tinggal</label>
                 <input type="text" class="form-input" id="reg-alamat" placeholder="Jl. Melati No. 10" required />
               </div>
-              <button type="submit" class="btn btn-primary btn-block" style="margin-top:0.5rem;padding:0.78rem;">
-                Daftar &amp; Buat Dompet Nasabah
+              <button type="submit" class="btn btn-primary btn-block" style="margin-top:0.5rem;padding:0.65rem;">
+                Buat akun
               </button>
             </form>
           `
