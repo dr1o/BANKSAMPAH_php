@@ -398,7 +398,7 @@ function renderNasabahTarikTab() {
           `
           }
 
-          <button type="submit" class="btn btn-primary btn-block" style="padding:0.8rem;" ${!cukup ? 'disabled' : ''}>
+          <button type="submit" id="btn-proses-tarik" class="btn btn-primary btn-block" style="padding:0.8rem;" ${!cukup ? 'disabled' : ''}>
             Proses Penarikan
           </button>
         </form>
@@ -413,19 +413,19 @@ function renderNasabahTarikTab() {
           </div>
           <div style="display:flex;justify-content:space-between;">
             <span>Nominal Diterima Nasabah:</span>
-            <strong class="mono">${formatRp(jml)}</strong>
+            <strong class="mono" id="tarik-nominal">${formatRp(jml)}</strong>
           </div>
           <div style="display:flex;justify-content:space-between;">
             <span>Biaya Admin:</span>
-            <strong class="mono">${formatRp(biayaAdmin)} (${isBank ? 'Tetap Rp2.500' : '1%'})</strong>
+            <strong class="mono" id="tarik-biaya">${formatRp(biayaAdmin)} (${isBank ? 'Tetap Rp2.500' : '1%'})</strong>
           </div>
           <div style="border-top:1px solid var(--border-strong);padding-top:0.65rem;display:flex;justify-content:space-between;font-size:1.05rem;">
             <strong>Total Dipotong:</strong>
-            <strong class="mono" style="color:var(--brown-900);">${formatRp(totalPotong)}</strong>
+            <strong class="mono" id="tarik-total" style="color:var(--brown-900);">${formatRp(totalPotong)}</strong>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:0.88rem;">
             <span>Estimasi Sisa Saldo:</span>
-            <strong class="mono" style="color:${cukup ? '#166534' : '#991B1B'};">
+            <strong class="mono" id="tarik-sisa" style="color:${cukup ? '#166534' : '#991B1B'};">
               ${cukup ? formatRp(dompet.saldoRupiah - totalPotong) : 'Saldo Tidak Cukup!'}
             </strong>
           </div>
@@ -565,18 +565,34 @@ export function bindNasabahEvents() {
   });
 
   document.getElementById('tarik-jumlah')?.addEventListener('input', (e) => {
-    state.tarikForm.jumlah = parseFloat(e.target.value || '0');
+    const jml = parseFloat(e.target.value || '0') || 0;
+    state.tarikForm.jumlah = jml;
     state.tarikForm.field1 = document.getElementById('tarik-f1')?.value || state.tarikForm.field1;
     state.tarikForm.field2 = document.getElementById('tarik-f2')?.value || state.tarikForm.field2;
     state.tarikForm.field3 = document.getElementById('tarik-f3')?.value || state.tarikForm.field3;
-    triggerRender();
-    const input = document.getElementById('tarik-jumlah');
-    if (input) {
-      input.focus();
-      if (input.type !== 'number' && input.setSelectionRange) {
-        input.setSelectionRange(input.value.length, input.value.length);
-      }
+
+    // Perbarui simulasi langsung di DOM. Jangan render ulang halaman di sini:
+    // render ulang akan mengganti elemen input dan memindahkan kursor ke awal.
+    const isBank = state.tarikForm.tipeMetode === 'BANK';
+    const biayaAdmin = isBank ? 2500 : Math.round(jml * 0.01);
+    const totalPotong = jml + biayaAdmin;
+    const saldo = state.currentUser.dompet?.saldoRupiah || 0;
+    const cukup = jml > 0 && saldo >= totalPotong;
+
+    const nominalEl = document.getElementById('tarik-nominal');
+    const biayaEl = document.getElementById('tarik-biaya');
+    const totalEl = document.getElementById('tarik-total');
+    const sisaEl = document.getElementById('tarik-sisa');
+    const tombol = document.getElementById('btn-proses-tarik');
+
+    if (nominalEl) nominalEl.textContent = formatRp(jml);
+    if (biayaEl) biayaEl.textContent = `${formatRp(biayaAdmin)} (${isBank ? 'Tetap Rp2.500' : '1%'})`;
+    if (totalEl) totalEl.textContent = formatRp(totalPotong);
+    if (sisaEl) {
+      sisaEl.textContent = cukup ? formatRp(saldo - totalPotong) : 'Saldo Tidak Cukup!';
+      sisaEl.style.color = cukup ? '#166534' : '#991B1B';
     }
+    if (tombol) tombol.disabled = !cukup;
   });
 
   document.getElementById('form-tarik-saldo')?.addEventListener('submit', async (e) => {
